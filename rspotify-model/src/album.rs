@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 use crate::{
-    AlbumIdBuf, AlbumType, Copyright, DatePrecision, Image, Page, RestrictionReason,
+    AlbumId, AlbumType, Copyright, DatePrecision, Image, Page, RestrictionReason,
     SimplifiedArtist, SimplifiedTrack,
 };
 
@@ -21,7 +21,7 @@ pub struct SimplifiedAlbum {
     pub available_markets: Vec<String>,
     pub external_urls: HashMap<String, String>,
     pub href: Option<String>,
-    pub id: Option<AlbumIdBuf>,
+    pub id: Option<AlbumId<'static>>,
     pub images: Vec<Image>,
     pub name: String,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -43,7 +43,7 @@ pub struct FullAlbum {
     pub external_urls: HashMap<String, String>,
     pub genres: Vec<String>,
     pub href: String,
-    pub id: AlbumIdBuf,
+    pub id: AlbumId<'static>,
     pub images: Vec<Image>,
     pub name: String,
     pub popularity: u32,

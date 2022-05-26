@@ -7,7 +7,7 @@ use std::{collections::HashMap, time::Duration};
 
 use crate::{
     custom_serde::duration_ms, PlayableId, Restriction, SimplifiedAlbum, SimplifiedArtist,
-    TrackIdBuf,
+    TrackId,
 };
 
 /// Full track object
@@ -25,7 +25,7 @@ pub struct FullTrack {
     pub external_urls: HashMap<String, String>,
     pub href: Option<String>,
     /// Note that a track may not have an ID/URI if it's local
-    pub id: Option<TrackIdBuf>,
+    pub id: Option<TrackId<'static>>,
     pub is_local: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub is_playable: Option<bool>,
@@ -44,7 +44,7 @@ pub struct FullTrack {
 pub struct TrackLink {
     pub external_urls: HashMap<String, String>,
     pub href: String,
-    pub id: TrackIdBuf,
+    pub id: TrackId<'static>,
 }
 
 /// Intermediate full track wrapped by `Vec`
@@ -68,7 +68,7 @@ pub struct SimplifiedTrack {
     pub external_urls: HashMap<String, String>,
     #[serde(default)]
     pub href: Option<String>,
-    pub id: Option<TrackIdBuf>,
+    pub id: Option<TrackId<'static>>,
     pub is_local: bool,
     pub is_playable: Option<bool>,
     pub linked_from: Option<TrackLink>,

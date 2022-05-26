@@ -259,7 +259,7 @@ where
     /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-several-tracks)
     async fn tracks<'a>(
         &self,
-        track_ids: impl IntoIterator<Item = &'a TrackId> + Send + 'a,
+        track_ids: impl IntoIterator<Item = TrackId<'a>> + Send + 'a,
         market: Option<&Market>,
     ) -> ClientResult<Vec<FullTrack>> {
         let ids = join_ids(track_ids);
@@ -292,7 +292,7 @@ where
     /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-multiple-artists)
     async fn artists<'a>(
         &self,
-        artist_ids: impl IntoIterator<Item = &'a ArtistId> + Send + 'a,
+        artist_ids: impl IntoIterator<Item = ArtistId<'a>> + Send + 'a,
     ) -> ClientResult<Vec<FullArtist>> {
         let ids = join_ids(artist_ids);
         let url = format!("artists/?ids={}", ids);
@@ -408,7 +408,7 @@ where
     /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-multiple-albums)
     async fn albums<'a>(
         &self,
-        album_ids: impl IntoIterator<Item = &'a AlbumId> + Send + 'a,
+        album_ids: impl IntoIterator<Item = AlbumId<'a>> + Send + 'a,
     ) -> ClientResult<Vec<FullAlbum>> {
         let ids = join_ids(album_ids);
         let url = format!("albums/?ids={}", ids);
@@ -615,7 +615,7 @@ where
     /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-multiple-shows)
     async fn get_several_shows<'a>(
         &self,
-        ids: impl IntoIterator<Item = &'a ShowId> + Send + 'a,
+        ids: impl IntoIterator<Item = ShowId<'a>> + Send + 'a,
         market: Option<&Market>,
     ) -> ClientResult<Vec<SimplifiedShow>> {
         let ids = join_ids(ids);
@@ -709,7 +709,7 @@ where
     /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-multiple-episodes)
     async fn get_several_episodes<'a>(
         &self,
-        ids: impl IntoIterator<Item = &'a EpisodeId> + Send + 'a,
+        ids: impl IntoIterator<Item = EpisodeId<'a>> + Send + 'a,
         market: Option<&Market>,
     ) -> ClientResult<Vec<FullEpisode>> {
         let ids = join_ids(ids);
@@ -742,7 +742,7 @@ where
     /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-several-audio-features)
     async fn tracks_features<'a>(
         &self,
-        track_ids: impl IntoIterator<Item = &'a TrackId> + Send + 'a,
+        track_ids: impl IntoIterator<Item = TrackId<'a>> + Send + 'a,
     ) -> ClientResult<Option<Vec<AudioFeatures>>> {
         let url = format!("audio-features/?ids={}", join_ids(track_ids));
 
@@ -965,9 +965,9 @@ where
     async fn recommendations<'a>(
         &self,
         attributes: impl IntoIterator<Item = RecommendationsAttribute> + Send + 'a,
-        seed_artists: Option<impl IntoIterator<Item = &'a ArtistId> + Send + 'a>,
+        seed_artists: Option<impl IntoIterator<Item = ArtistId<'a>> + Send + 'a>,
         seed_genres: Option<impl IntoIterator<Item = &'a str> + Send + 'a>,
-        seed_tracks: Option<impl IntoIterator<Item = &'a TrackId> + Send + 'a>,
+        seed_tracks: Option<impl IntoIterator<Item = TrackId<'a>> + Send + 'a>,
         market: Option<&Market>,
         limit: Option<u32>,
     ) -> ClientResult<Recommendations> {

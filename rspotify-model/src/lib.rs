@@ -30,6 +30,8 @@ pub use {
     show::*, track::*, user::*,
 };
 
+use std::borrow::Cow;
+
 use serde::{Deserialize, Serialize};
 
 /// Followers object
@@ -53,10 +55,10 @@ impl PlayableItem {
     ///
     /// Note that if it's a track and if it's local, it may not have an ID, in
     /// which case this function will return `None`.
-    pub fn id(&self) -> Option<PlayableId<'_>> {
+    pub fn id<'a>(&'a self) -> Option<PlayableId<'a>> {
         match self {
-            PlayableItem::Track(t) => t.id.as_ref().map(|id| PlayableId::Track(id)),
-            PlayableItem::Episode(e) => Some(PlayableId::Episode(&e.id)),
+            PlayableItem::Track(t) => t.id.as_ref().map(|id| PlayableId::Track(id.as_borrowed())),
+            PlayableItem::Episode(e) => Some(PlayableId::Episode(e.id.as_borrowed())),
         }
     }
 }
